@@ -1,0 +1,4 @@
+interval: 3
+scale: seconds
+actions:
+- !!str PTANG=fnord echo "ptang: $FNORD"

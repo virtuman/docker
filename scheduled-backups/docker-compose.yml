@@ -1,0 +1,30 @@
+mysql:
+  image: mysql:5.6
+  environment:
+    - MYSQL_ROOT_PASSWORD=fnord
+    - MYSQL_DATABASE=test
+    - MYSQL_USER=testuser
+    - MYSQL_PASSWORD=testpass
+  volumes:
+    - ./tmpdata:/var/lib/mysql
+
+files:
+  image: busybox
+  command: touch /files/file && bash -c ls /files
+  volumes:
+    - ./tmpfiles:/files
+
+backup:
+  image: backup
+  links:
+    - mysql
+  volumes_from:
+    - files
+  volumes:
+    - ./tasks:/tasks
+    - ./backup:/backup
+  environment:
+    - BACKUP_USERNAME=testuser
+    - BACKUP_PASSWORD=testpass
+
+

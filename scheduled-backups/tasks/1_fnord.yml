@@ -1,0 +1,8 @@
+interval: 15
+scale: seconds
+actions:
+- ls -al /tasks
+- ls -al /files
+- automysqlbackup
+- ls -al /backup
+- !!str THINGS=stuff echo -e "$THINGS"
