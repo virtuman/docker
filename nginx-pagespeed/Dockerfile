@@ -1,4 +1,4 @@
-FROM funkygibbon/ubuntu
+FROM funkygibbon/ubuntu:trusty
 
 EXPOSE 80
 EXPOSE 443
