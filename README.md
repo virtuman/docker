@@ -1,5 +1,8 @@
-# docker
+# docker-ubuntu-base
 
-The obligatory Dockerfile collection
+https://registry.hub.docker.com/u/funkygibbon/ubuntu/
 
-See: https://hub.docker.com/u/funkygibbon/ for various automated builds of these docker images
+Automated daily build of an Ubuntu trusty base image from https://phusion.github.io/baseimage-docker/ 
+
+- Modified apt sources.list to use `http://mirror.rackspace.com/ubuntu/`
+- Set container timezone to environment variable `${TIMEZONE:-$DEFAULT_TIMEZONE}`, defaults to `Australia/Sydney`
