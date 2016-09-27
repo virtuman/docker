@@ -17,8 +17,8 @@ RUN apt-get update && \
 		php5-mcrypt \
 		php5-mhash \
 		php5-redis \
-                php5-memcached \
-                php5-memcache \
+        php5-memcached \
+        php5-memcache \
 		php5-xdebug \
 		php5-recode && \
 	php5enmod mcrypt imap && \
