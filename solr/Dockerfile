@@ -1,4 +1,4 @@
-FROM funkygibbon/openjdk
+FROM funkygibbon/openjdk:xenial
 
 MAINTAINER Ray Walker <hello@raywalker.it>
 
