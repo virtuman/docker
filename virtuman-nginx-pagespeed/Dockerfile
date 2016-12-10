@@ -31,14 +31,10 @@ ENV NGINX_VERSION=1.11.6 \
 #   TZ=UTC \
 
 
-#    apt-add-repository 'deb-src http://mirror.rackspace.com/ubuntu/ xenial main restricted universe multiverse' && \
-RUN apt-add-repository 'deb http://mirror.rackspace.com/ubuntu/ xenial main restricted universe multiverse' && \
-    apt-add-repository 'deb http://mirror.rackspace.com/ubuntu/ xenial-updates main restricted universe multiverse' && \
-    apt-add-repository 'deb http://mirror.rackspace.com/ubuntu/ xenial-backports main restricted universe multiverse' && \
-    apt-add-repository 'deb http://mirror.rackspace.com/ubuntu/ xenial-security main restricted universe multiverse' && \
-    apt-add-repository 'deb-src http://mirror.rackspace.com/ubuntu/ xenial-updates main restricted universe multiverse' && \
-    apt-add-repository 'deb-src http://mirror.rackspace.com/ubuntu/ xenial-backports main restricted universe multiverse' && \
-    apt-add-repository 'deb-src http://mirror.rackspace.com/ubuntu/ xenial-security main restricted universe multiverse' && \
+RUN apt-add-repository -s 'deb http://mirror.rackspace.com/ubuntu/ xenial main restricted universe multiverse' && \
+    apt-add-repository -s 'deb http://mirror.rackspace.com/ubuntu/ xenial-updates main restricted universe multiverse' && \
+    apt-add-repository -s 'deb http://mirror.rackspace.com/ubuntu/ xenial-backports main restricted universe multiverse' && \
+    apt-add-repository -s 'deb http://mirror.rackspace.com/ubuntu/ xenial-security main restricted universe multiverse' && \
     useradd -r -s /usr/sbin/nologin nginx && \
     mkdir -p /var/log/nginx /var/cache/nginx && \
 	apt-get update  && apt-get -y upgrade &&  \
@@ -122,5 +118,7 @@ RUN chmod 750 /app/bin/*.sh && \
     /app/bin/init_nginx.sh
 
 EXPOSE 80 443
+
+VOLUME ["/etc/nginx"]
 
 CMD ["/sbin/my_init"]
