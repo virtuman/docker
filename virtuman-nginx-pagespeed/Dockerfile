@@ -1,5 +1,4 @@
 FROM phusion/baseimage:latest
-#FROM funkygibbon/ubuntu:xenial
 
 MAINTAINER Alexei Smirnov <alexei@virtuman.com>
 
@@ -8,6 +7,7 @@ MAINTAINER Alexei Smirnov <alexei@virtuman.com>
 # Releases after 1.11.33.4 there will be a PSOL_BINARY_URL file that tells us where to look, until then this is hardcoded
 # https://github.com/openresty/headers-more-nginx-module/tags
 # https://www.openssl.org/source
+# https://github.com/kvspb/nginx-auth-ldap
 
 ENV NGINX_VERSION=1.11.6 \
     PAGESPEED_VERSION=latest-stable \
@@ -15,19 +15,7 @@ ENV NGINX_VERSION=1.11.6 \
     HEADERS_MORE_VERSION=0.31 \
     OPENSSL_VERSION=1.0.2j \
     TERM=xterm-256color \
-    DEBIAN_FRONTEND=noninteractive \
-
-    DEFAULT_APP_ENV=development \
-    DEFAULT_APP_USER=app \
-    DEFAULT_APP_GROUP=app \
-    DEFAULT_APP_UID=1000 \
-    DEFAULT_APP_GID=1000 \
-    DEFAULT_UPLOAD_MAX_SIZE=30M \
-    DEFAULT_NGINX_MAX_WORKER_PROCESSES=8 \
-    DEFAULT_CHOWN_APP_DIR=true \
-
-    SSL_ENABLED=false
-
+    DEBIAN_FRONTEND=noninteractive
 #   TZ=UTC \
 
 
@@ -35,13 +23,33 @@ RUN apt-add-repository -s 'deb http://mirror.rackspace.com/ubuntu/ xenial main r
     apt-add-repository -s 'deb http://mirror.rackspace.com/ubuntu/ xenial-updates main restricted universe multiverse' && \
     apt-add-repository -s 'deb http://mirror.rackspace.com/ubuntu/ xenial-backports main restricted universe multiverse' && \
     apt-add-repository -s 'deb http://mirror.rackspace.com/ubuntu/ xenial-security main restricted universe multiverse' && \
+    LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php && \
+    set -ex && \
+    buildDeps=' \
+        autoconf \
+        automake \
+        build-essential \
+        ca-certificates \
+        debhelper \
+        gcc \
+        libatomic-ops-dev \
+        libc6-dev \
+        libgd2-xpm-dev \
+        libgoogle-perftools-dev \
+        libldap-dev \
+        libpcre3-dev \
+        libperl-dev \
+        libssl-dev \
+        libtool \
+        libxml2-dev \
+        libxslt1-dev \
+        make \
+        unzip \
+        wget \
+        zlib1g-dev ' && \
     useradd -r -s /usr/sbin/nologin nginx && \
     mkdir -p /var/log/nginx /var/cache/nginx && \
-	apt-get update  && apt-get -y upgrade &&  \
-	apt-get -y --no-install-recommends install autoconf automake build-essential ca-certificates debhelper \
-                                               libgd2-xpm-dev libgeoip-dev libgoogle-perftools-dev libldap-dev libpcre3-dev \
-                                               libperl-dev libssl-dev libtool libxml2-dev libxslt1-dev lsb-release \
-                                               unzip wget zlib1g-dev geoip-database-contrib libatomic-ops-dev && \
+	apt-get update  && apt-get install -y --no-install-recommends $buildDeps libgeoip-dev lsb-release && \
 	echo "Downloading nginx ${NGINX_VERSION} from http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz ..." && wget -qO - http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz | tar zxf - -C /tmp && \
 	echo "Downloading headers-more ${HEADERS_MORE_VERSION} from https://github.com/openresty/headers-more-nginx-module/archive/v${HEADERS_MORE_VERSION}.tar.gz ..." && wget -qO - https://github.com/openresty/headers-more-nginx-module/archive/v${HEADERS_MORE_VERSION}.tar.gz | tar zxf - -C /tmp && \
 	echo "Downloading ngx_pagespeed ${PAGESPEED_VERSION} from https://github.com/pagespeed/ngx_pagespeed/archive/${PAGESPEED_VERSION}.tar.gz..." && wget -qO - https://github.com/pagespeed/ngx_pagespeed/archive/${PAGESPEED_VERSION}.tar.gz | tar zxf - -C /tmp && \
@@ -102,17 +110,24 @@ RUN apt-add-repository -s 'deb http://mirror.rackspace.com/ubuntu/ xenial main r
 		--add-module=/tmp/ngx_pagespeed-${PAGESPEED_VERSION}  && \
 	make && \
 	make install && \
-	apt-get purge -yqq --auto-remove gcc libc6-dev make automake autoconf build-essential debhelper libatomic-ops-dev \
-	                   libgoogle-perftools-dev libldap-dev libpcre3-dev libperl-dev libssl-dev libtool \
-	                   libxml2-dev libxslt1-dev perl zlib1g-dev libgd2-xpm-dev && \
-	apt-get install -yqq libgd3 && \
+	apt-get purge -yqq $buildDeps && \
+	apt-get install -yqq geoip-database-contrib libgd3 && \
 	apt-get autoremove -yqq && \
 	apt-get clean autoclean && \
 	rm -Rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
-#
-# 	find /var/lib/{apt,dpkg,cache} -type f -delete 2>/dev/null && \
 
 COPY . /app
+
+ENV     DEFAULT_APP_ENV=development \
+        DEFAULT_APP_USER=app \
+        DEFAULT_APP_GROUP=app \
+        DEFAULT_APP_UID=1000 \
+        DEFAULT_APP_GID=1000 \
+        DEFAULT_UPLOAD_MAX_SIZE=30M \
+        DEFAULT_NGINX_MAX_WORKER_PROCESSES=8 \
+        DEFAULT_CHOWN_APP_DIR=true \
+
+        SSL_ENABLED=false
 
 RUN chmod 750 /app/bin/*.sh && \
     /app/bin/init_nginx.sh

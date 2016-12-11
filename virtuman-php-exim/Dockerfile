@@ -1,34 +1,62 @@
-FROM funkygibbon/nginx-pagespeed:latest
+FROM nginx-pagespeed5:latest
 
-MAINTAINER Ray Walker <hello@raywalker.it>
+MAINTAINER Alexei Smirnov <alexei@virtuman.com>
+
+
+ENV PHP_VERSION 7.0
 
 RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - && \
     sh -c 'echo "deb http://apt.newrelic.com/debian/ newrelic non-free" > /etc/apt/sources.list.d/newrelic.list' && \
     apt-get update && \
-    apt-get -y --no-install-recommends install \
-		exim4 \
-		php \
-		php-cli \
-		php-curl \
+    $packagesPHP7=' \
+        php \
+        php-cli \
+        php-curl \
         php-fpm \
-		php-gd \
-		php-imagick \
-		php-imap \
+        php-gd \
+        php-imagick \
+        php-imap \
         php-intl \
         php-mbstring \
-		php-mcrypt \
+        php-mcrypt \
         php-mysql \
         php-memcached \
         php-memcache \
         php-recode \
         php-redis \
-		php-xdebug \
-		php-xml \
-		php-xsl \
-		php-zip \
-		newrelic-php5 && \
+        php-xdebug \
+        php-xml \
+        php-xsl \
+        php-zip \ ' && \
+    $packagesPHP5=' \
+        php5.6 \
+        php5.6-apc \
+        php5.6-fpm \
+        php5.6-mysql \
+        php5.6-cli \
+        php5.6-curl \
+        php5.6-gd \
+        php5.6-intl \
+        php5.6-imagick \
+        php5.6-imap \
+        php5.6-mcrypt \
+        php5.6-mhash \
+        php5.6-mbstring \
+        php5.6-redis \
+        php5.6-memcached \
+        php5.6-memcache \
+        php5.6-xdebug \
+        php5.6-xml \
+        php5.6-recode \ ' && \
+    apt-get -y --no-install-recommends install \
+		exim4 \
+		newrelic-php5 \
+		$packagesPHP7 \
+		"${PHP_EXTRA_PACKAGES}" \
+		&& \
     newrelic-install install && \
-	apt-get clean && \
+	apt-get autoremove -yqq && \
+	apt-get clean autoclean && \
     rm -Rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
 
 RUN mkdir /root/bin/ && \
@@ -37,7 +65,6 @@ RUN mkdir /root/bin/ && \
 EXPOSE 443
 EXPOSE 80
 
-ENV PHP_VERSION 7.0
 
 ENV DEFAULT_ADMIN_EMAIL nobody@example.com
 ENV DEFAULT_APP_ENV production
@@ -50,7 +77,7 @@ ENV DEFAULT_APP_UID 1000
 ENV DEFAULT_APP_GID 1000
 ENV DEFAULT_UPLOAD_MAX_SIZE 30M
 ENV DEFAULT_NGINX_MAX_WORKER_PROCESSES 8
-ENV DEFAULT_NGINX_KEEPALIVE_TIMEOUT 30 
+ENV DEFAULT_NGINX_KEEPALIVE_TIMEOUT 30
 ENV DEFAULT_PHP_MEMORY_LIMIT 128M
 ENV DEFAULT_PHP_MAX_EXECUTION_TIME 300
 ENV DEFAULT_PHP_MAX_INPUT_VARS 2000
