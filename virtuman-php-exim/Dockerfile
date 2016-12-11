@@ -52,13 +52,13 @@ RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - && \
 		exim4 \
 		newrelic-php5 \
 		$packagesPHP7 \
-		"${PHP_EXTRA_PACKAGES}" \
 		&& \
     newrelic-install install && \
 	apt-get autoremove -yqq && \
 	apt-get clean autoclean && \
     rm -Rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
 
+# ${PHP_EXTRA_PACKAGES} \
 RUN mkdir /root/bin/ && \
 	echo "export PATH=/root/bin:$PATH" > /root/.bashrc
 
