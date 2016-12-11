@@ -28,7 +28,6 @@ RUN apt-add-repository -s 'deb http://mirror.rackspace.com/ubuntu/ xenial main r
         autoconf \
         automake \
         build-essential \
-        ca-certificates \
         debhelper \
         gcc \
         libatomic-ops-dev \
@@ -48,7 +47,7 @@ RUN apt-add-repository -s 'deb http://mirror.rackspace.com/ubuntu/ xenial main r
         zlib1g-dev ' && \
     useradd -r -s /usr/sbin/nologin nginx && \
     mkdir -p /var/log/nginx /var/cache/nginx && \
-	apt-get update  && apt-get install -y --no-install-recommends $buildDeps libgeoip-dev lsb-release && \
+	apt-get update  && apt-get install -y --no-install-recommends $buildDeps ca-certificates libgeoip-dev lsb-release && \
 	echo "Downloading nginx ${NGINX_VERSION} from http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz ..." && wget -qO - http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz | tar zxf - -C /tmp && \
 	echo "Downloading headers-more ${HEADERS_MORE_VERSION} from https://github.com/openresty/headers-more-nginx-module/archive/v${HEADERS_MORE_VERSION}.tar.gz ..." && wget -qO - https://github.com/openresty/headers-more-nginx-module/archive/v${HEADERS_MORE_VERSION}.tar.gz | tar zxf - -C /tmp && \
 	echo "Downloading ngx_pagespeed ${PAGESPEED_VERSION} from https://github.com/pagespeed/ngx_pagespeed/archive/${PAGESPEED_VERSION}.tar.gz..." && wget -qO - https://github.com/pagespeed/ngx_pagespeed/archive/${PAGESPEED_VERSION}.tar.gz | tar zxf - -C /tmp && \
