@@ -1,15 +1,17 @@
-FROM nginx-pagespeed5:latest
+FROM virtuman/nginx-pagespeed:latest
 
 MAINTAINER Alexei Smirnov <alexei@virtuman.com>
 
 
 ENV PHP_VERSION 7.0
 
+#    if [[ ${PHP_VERSION} == "5.6" ]]; then apt-get install software-properties-common && add-apt-repository ppa:ondrej/php && apt-get update; fi && \
+#		if [[ ${PHP_VERSION} == "5.6" ]]; then $packagesPHP7; else $packagesPHP7; fi && \
+
 RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - && \
     sh -c 'echo "deb http://apt.newrelic.com/debian/ newrelic non-free" > /etc/apt/sources.list.d/newrelic.list' && \
     apt-get update && \
-    if [[ ${PHP_VERSION} == "5.6" ]]; then apt-get install software-properties-common && add-apt-repository ppa:ondrej/php && apt-get update; fi && \
-        packagesPHP7=' \
+    packagesPHP7=' \
         php \
         php-bcmath \
         php-cli \
@@ -66,8 +68,7 @@ RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - && \
     apt-get -y --no-install-recommends install \
 		exim4 \
 		newrelic-php5 \
-		if [[ ${PHP_VERSION} == "5.6" ]]; then $packagesPHP7; else $packagesPHP7; fi && \
-		 \
+		$packagesPHP7 \
 		&& \
     newrelic-install install && \
 	apt-get autoremove -yqq && \
