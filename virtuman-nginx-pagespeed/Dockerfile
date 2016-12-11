@@ -23,7 +23,6 @@ RUN apt-add-repository -s 'deb http://mirror.rackspace.com/ubuntu/ xenial main r
     apt-add-repository -s 'deb http://mirror.rackspace.com/ubuntu/ xenial-updates main restricted universe multiverse' && \
     apt-add-repository -s 'deb http://mirror.rackspace.com/ubuntu/ xenial-backports main restricted universe multiverse' && \
     apt-add-repository -s 'deb http://mirror.rackspace.com/ubuntu/ xenial-security main restricted universe multiverse' && \
-    LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php && \
     set -ex && \
     buildDeps=' \
         autoconf \

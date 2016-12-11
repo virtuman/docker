@@ -8,20 +8,26 @@ ENV PHP_VERSION 7.0
 RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - && \
     sh -c 'echo "deb http://apt.newrelic.com/debian/ newrelic non-free" > /etc/apt/sources.list.d/newrelic.list' && \
     apt-get update && \
-    packagesPHP7=' \
+    if [[ ${PHP_VERSION} == "5.6" ]]; then apt-get install software-properties-common && add-apt-repository ppa:ondrej/php && apt-get update; fi && \
+        packagesPHP7=' \
         php \
+        php-bcmath \
         php-cli \
         php-curl \
         php-fpm \
         php-gd \
+        php-igbinary \
         php-imagick \
         php-imap \
         php-intl \
         php-mbstring \
         php-mcrypt \
-        php-mysql \
-        php-memcached \
         php-memcache \
+        php-memcached \
+        php-mongodb \
+        php-monolog \
+        php-msgpack \
+        php-mysql \
         php-recode \
         php-redis \
         php-xdebug \
@@ -30,28 +36,38 @@ RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - && \
         php-zip ' && \
     packagesPHP5=' \
         php5.6 \
-        php5.6-apc \
+        php5.6-bcmath \
         php5.6-fpm \
         php5.6-mysql \
         php5.6-cli \
         php5.6-curl \
         php5.6-gd \
-        php5.6-intl \
-        php5.6-imagick \
+        php-imagick \
         php5.6-imap \
-        php5.6-mcrypt \
-        php5.6-mhash \
+        php5.6-intl \
+        php5.6-json \
+        php5.6-ldap \
         php5.6-mbstring \
-        php5.6-redis \
-        php5.6-memcached \
+        php5.6-mcrypt \
         php5.6-memcache \
+        php5.6-memcached \
+        php5.6-mhash \
+        php-mongodb \
+        php-msgpack \
+        php5.6-mysql \
+        php-mysqlnd-ms \
+        php5.6-opcache \
+        php5.6-redis \
         php5.6-xdebug \
         php5.6-xml \
-        php5.6-recode ' && \
+        php5.6-recode \
+        php5.6-soap \
+        php5.6-zip ' && \
     apt-get -y --no-install-recommends install \
 		exim4 \
 		newrelic-php5 \
-		$packagesPHP7 \
+		if [[ ${PHP_VERSION} == "5.6" ]]; then $packagesPHP7; else $packagesPHP7; fi && \
+		 \
 		&& \
     newrelic-install install && \
 	apt-get autoremove -yqq && \
