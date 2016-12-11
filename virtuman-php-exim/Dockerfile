@@ -8,7 +8,7 @@ ENV PHP_VERSION 7.0
 RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - && \
     sh -c 'echo "deb http://apt.newrelic.com/debian/ newrelic non-free" > /etc/apt/sources.list.d/newrelic.list' && \
     apt-get update && \
-    $packagesPHP7=' \
+    packagesPHP7=' \
         php \
         php-cli \
         php-curl \
@@ -27,8 +27,8 @@ RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - && \
         php-xdebug \
         php-xml \
         php-xsl \
-        php-zip \ ' && \
-    $packagesPHP5=' \
+        php-zip ' && \
+    packagesPHP5=' \
         php5.6 \
         php5.6-apc \
         php5.6-fpm \
@@ -47,7 +47,7 @@ RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - && \
         php5.6-memcache \
         php5.6-xdebug \
         php5.6-xml \
-        php5.6-recode \ ' && \
+        php5.6-recode ' && \
     apt-get -y --no-install-recommends install \
 		exim4 \
 		newrelic-php5 \
