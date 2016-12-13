@@ -13,6 +13,7 @@ echo "export TERM=xterm-256color" >> /root/.bashrc
 # PHP-FPM
 sed -i -r "s/fastcgi_pass unix:.*;/fastcgi_pass unix:\/run\/php\/php${PHP_VERSION}-fpm\.sock;/g" /etc/nginx/sites-enabled/default.conf
 sed -i -r "s/fastcgi_pass unix:.*;/fastcgi_pass unix:\/run\/php\/php${PHP_VERSION}-fpm\.sock;/g" /etc/nginx/sites-enabled/default-ssl.conf
+sed -i -r "s/server unix:\/run\/php\/.*;/server unix:\/run\/php\/php${PHP_VERSION}-fpm\.sock;/g" /etc/nginx/conf.d/*.conf
 
 # Backup original information
 cp /etc/php/${PHP_VERSION}/fpm/php.ini /etc/php/${PHP_VERSION}/fpm/php.ini.dist

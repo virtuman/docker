@@ -71,6 +71,8 @@ RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - && \
 		$packagesPHP7 \
 		&& \
     newrelic-install install && \
+	# Install Composer
+    curl https://getcomposer.org/installer | php -- && mv composer.phar /usr/local/bin/composer && chmod +x /usr/local/bin/composer && \
 	apt-get autoremove -yqq && \
 	apt-get clean autoclean && \
     rm -Rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
