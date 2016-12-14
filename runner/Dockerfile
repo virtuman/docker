@@ -9,3 +9,6 @@ RUN apt-get update && \
     chmod +x /app/bin/install_composer.sh
 
 RUN /app/bin/install_composer.sh
+
+ENTRYPOINT []
+
