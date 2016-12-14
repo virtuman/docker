@@ -5,9 +5,6 @@ MAINTAINER Alexei Smirnov <alexei@virtuman.com>
 
 ENV PHP_VERSION 7.0
 
-#    if [[ ${PHP_VERSION} == "5.6" ]]; then apt-get install software-properties-common && add-apt-repository ppa:ondrej/php && apt-get update; fi && \
-#		if [[ ${PHP_VERSION} == "5.6" ]]; then $packagesPHP7; else $packagesPHP7; fi && \
-
 RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - && \
     sh -c 'echo "deb http://apt.newrelic.com/debian/ newrelic non-free" > /etc/apt/sources.list.d/newrelic.list' && \
     apt-get update && \
@@ -74,15 +71,11 @@ RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - && \
     curl https://getcomposer.org/installer | php -- && mv composer.phar /usr/local/bin/composer && chmod +x /usr/local/bin/composer && \
 	apt-get autoremove -yqq && \
 	apt-get clean autoclean && \
-    rm -Rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
+    rm -Rf /tmp/* /var/tmp/* /var/lib/apt/lists/* && \
+    mkdir /root/bin/ && \
+    echo "export PATH=/root/bin:$PATH" > /root/.bashrc
 
-# ${PHP_EXTRA_PACKAGES} \
-RUN mkdir /root/bin/ && \
-	echo "export PATH=/root/bin:$PATH" > /root/.bashrc
-
-EXPOSE 443
-EXPOSE 80
-
+EXPOSE 443 80
 
 ENV DEFAULT_ADMIN_EMAIL=nobody@example.com \
 	DEFAULT_APP_ENV=production \
@@ -117,12 +110,10 @@ ENV DEFAULT_ADMIN_EMAIL=nobody@example.com \
 	DEFAULT_NEWRELIC_ENABLED=true \
 	DEFAULT_NEWRELIC_LICENSE=DISABLED
 
-
 COPY . /app
 
-RUN chmod 750 /app/bin/*
-
-RUN /app/bin/init_php.sh
+RUN chmod 750 /app/bin/* && \
+    /app/bin/init_php.sh
 
 ENTRYPOINT ["/app/bin/boot.sh"]
 

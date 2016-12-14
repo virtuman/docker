@@ -2,7 +2,7 @@
 
 set -e
 
-NAMESPACE=funkygibbon
+NAMESPACE=git.virtuman.com/docker-nginx
 
 TAG=latest
 

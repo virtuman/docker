@@ -132,6 +132,4 @@ RUN chmod 750 /app/bin/*.sh && \
 
 EXPOSE 80 443
 
-VOLUME ["/etc/nginx"]
-
 CMD ["/sbin/my_init"]
