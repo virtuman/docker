@@ -65,11 +65,10 @@ RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - && \
         php5.6-recode \
         php5.6-soap \
         php5.6-zip ' && \
+   	$PHP_VERSION == "5.6" && apt-get install -y --no-install-recommends $packagesPHP5 || apt-get install -y --no-install-recommends $packagesPHP7 && \
     apt-get -y --no-install-recommends install \
 		exim4 \
-		newrelic-php5 \
-		$packagesPHP7 \
-		&& \
+		newrelic-php5 && \
     newrelic-install install && \
 	# Install Composer
     curl https://getcomposer.org/installer | php -- && mv composer.phar /usr/local/bin/composer && chmod +x /usr/local/bin/composer && \
