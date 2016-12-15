@@ -2,4 +2,4 @@
 
 # `/sbin/setuser memcache` runs the given command as the user `memcache`.
 # If you omit that part, the command will be run as root.
-exec /sbin/setuser memcache /usr/bin/memcached -m ${MEMCACHED_MEMORY_LIMIT:-$DEFAULT_MEMCACHED_MEMORY_LIMIT} -c ${MEMCACHED_MAXCONN:-$DEFAULT_MEMCACHED_MAXCONN} -c ${MEMCACHED_PORT:-$DEFAULT_MEMCACHED_PORT} >>/var/log/memcached.log 2>&1
+exec /sbin/setuser memcache /usr/bin/memcached -m ${MEMCACHED_MEMORY_LIMIT:-$DEFAULT_MEMCACHED_MEMORY_LIMIT} -c ${MEMCACHED_MAXCONN:-$DEFAULT_MEMCACHED_MAXCONN} -p ${MEMCACHED_PORT:-$DEFAULT_MEMCACHED_PORT} >>/var/log/memcached.log 2>&1
