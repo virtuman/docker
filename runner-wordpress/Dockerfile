@@ -1,4 +1,4 @@
-FROM virtuman/nginx-php-exim-memcached:latest
+FROM virtuman/wordpress:latest
 
 COPY . /app/
 
