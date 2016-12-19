@@ -11,6 +11,7 @@ RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - && \
     packagesPHP7=' \
         php \
         php-bcmath \
+        php-bz2 \
         php-cli \
         php-curl \
         php-fpm \
@@ -62,8 +63,8 @@ RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - && \
         php5.6-recode \
         php5.6-soap \
         php5.6-zip ' && \
-    [[ $PHP_VERSION == 5.6 ]] &&
-   	apt-get install -y --no-install-recommends git-core $( && echo $packagesPHP5 || echo $packagesPHP7) && \
+    [[ $PHP_VERSION == 5.6 ]] && LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php && INSTALL_PACKAGES=$packagesPHP5 || INSTALL_PACKAGES=$packagesPHP7 && \
+   	apt-get install -y --no-install-recommends git-core $INSTALL_PACKAGES && \
     apt-get -y --no-install-recommends install \
 		exim4 \
 		newrelic-php5 && \
