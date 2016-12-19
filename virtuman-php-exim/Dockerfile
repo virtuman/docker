@@ -67,6 +67,7 @@ RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - && \
    	apt-get install -y --no-install-recommends git-core $INSTALL_PACKAGES && \
     apt-get -y --no-install-recommends install \
 		exim4 \
+		rsync \
 		newrelic-php5 && \
     newrelic-install install && \
 	# Install Composer
