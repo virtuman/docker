@@ -4,7 +4,7 @@ MAINTAINER Alexei Smirnov <alexei@virtuman.com>
 
 
 ENV PHP_VERSION 7.0
-
+# LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
 RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - && \
     sh -c 'echo "deb http://apt.newrelic.com/debian/ newrelic non-free" > /etc/apt/sources.list.d/newrelic.list' && \
     apt-get update && \
@@ -27,6 +27,7 @@ RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - && \
         php-monolog \
         php-msgpack \
         php-mysql \
+        php-pear \
         php-recode \
         php-redis \
         php-xdebug \
@@ -48,21 +49,21 @@ RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - && \
         php5.6-ldap \
         php5.6-mbstring \
         php5.6-mcrypt \
-        php5.6-memcache \
-        php5.6-memcached \
-        php5.6-mhash \
+        php-memcache \
+        php-memcached \
         php-mongodb \
         php-msgpack \
         php5.6-mysql \
         php-mysqlnd-ms \
         php5.6-opcache \
-        php5.6-redis \
-        php5.6-xdebug \
+        php-redis \
+        php-xdebug \
         php5.6-xml \
         php5.6-recode \
         php5.6-soap \
         php5.6-zip ' && \
-   	$PHP_VERSION == "5.6" && apt-get install -y --no-install-recommends $packagesPHP5 || apt-get install -y --no-install-recommends $packagesPHP7 && \
+    [[ $PHP_VERSION == 5.6 ]] &&
+   	apt-get install -y --no-install-recommends git-core $( && echo $packagesPHP5 || echo $packagesPHP7) && \
     apt-get -y --no-install-recommends install \
 		exim4 \
 		newrelic-php5 && \
