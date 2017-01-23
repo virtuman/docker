@@ -58,7 +58,7 @@ else
 	
 	echo " * exim4:  local"
 
-	sed -i -r "s/dc_eximconfig_configtype=.*/dc_eximconfig_configtype='local'/g" /etc/exim4/update-exim4.conf.conf
+	sed -i -r "s/dc_eximconfig_configtype=.*/dc_eximconfig_configtype='internet'/g" /etc/exim4/update-exim4.conf.conf
 	sed -i -r "s/dc_smarthost=.*/dc_smarthost=''/g" /etc/exim4/update-exim4.conf.conf
 	sed -i -r "s/dc_hide_mailname=.*/dc_hide_mailname='true'/g" /etc/exim4/update-exim4.conf.conf
 
