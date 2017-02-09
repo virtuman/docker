@@ -1,6 +1,13 @@
 #!/bin/bash
 set -e
 
+# check if custom nginx config files are present in predefined project folders
+if [ -d /app/www/setup/docker/nginx ] ; then
+	rsync -av /app/www/setup/docker/nginx/ /etc/nginx
+elif [ -d /var/www/setup/docker/nginx/sites-enabled ] ; then
+	rsync -av /var/www/setup/docker/nginx/ /etc/nginx
+fi
+
 # Update nginx user
 sed -i -r "s/user\s+.+;/user ${APP_USER:-$DEFAULT_APP_USER};/g" /etc/nginx/nginx.conf
 
