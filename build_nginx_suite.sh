@@ -2,7 +2,7 @@
 
 set -e
 
-NAMESPACE=funkygibbon
+NAMESPACE=virtuman
 
 TAG=latest
 
