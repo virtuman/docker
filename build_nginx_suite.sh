@@ -8,7 +8,7 @@ TAG=latest
 
 PROJECT_DIR=`pwd`
 
-PROJECTS=("nginx" "nginx-pagespeed" "nginx-php-exim" "magento2" "nginx-proxy")
+PROJECTS=("virtuman-nginx-pagespeed"  "virtuman-php-exim" "virtuman-php-exim-memcached" "wordpress" "runner-php" "runner-wordpress")
 
 NGINX_VERSION="1.11.9"
 

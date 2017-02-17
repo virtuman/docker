@@ -9,11 +9,11 @@ MAINTAINER Alexei Smirnov <alexei@virtuman.com>
 # https://www.openssl.org/source
 # https://github.com/kvspb/nginx-auth-ldap
 
-ENV NGINX_VERSION=1.11.6 \
-    PAGESPEED_VERSION=latest-stable \
-    PAGESPEED_PSOL_VERSION=1.11.33.4 \
-    HEADERS_MORE_VERSION=0.31 \
-    OPENSSL_VERSION=1.0.2j \
+ENV NGINX_VERSION=${NGINX_VERSION:=1.11.9} \
+    PAGESPEED_VERSION=${PAGESPEED_VERSION:=latest-stable} \
+    PAGESPEED_PSOL_VERSION=${PAGESPEED_VERSION:=1.11.33.4} \
+    HEADERS_MORE_VERSION=PAGESPEED_PSOL_VERSION=${PAGESPEED_PSOL_VERSION:=0.31} \
+    OPENSSL_VERSION=${OPENSSL_VERSION:=1.0.2j} \
     TERM=xterm-256color \
     DEBIAN_FRONTEND=noninteractive
 #   TZ=UTC \
@@ -40,7 +40,7 @@ RUN apt-add-repository -s 'deb http://mirror.rackspace.com/ubuntu/ xenial main r
         libssl-dev \
         libtool \
         libxml2-dev \
-        libxslt1-dev \
+        libxslt1-dev \libgd2-xpm-dev
         make \
         unzip \
         wget \
