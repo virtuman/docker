@@ -11,5 +11,6 @@ RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
 
 RUN curl -o /usr/local/bin/wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
     chmod +x /usr/local/bin/wp-cli.phar && \
-    echo 'alias wp="/sbin/setuser ${APP_USER:-$DEFAULT_APP_USER} /usr/local/bin/wp-cli.phar"' >> /root/.bashrc
+    echo 'alias wp="/sbin/setuser ${APP_USER:-$DEFAULT_APP_USER} /usr/local/bin/wp-cli.phar"' >> /root/.bashrc && \
+    rm -rf /etc/nginx/sites-enabled/default-ssl.conf
 
