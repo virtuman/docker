@@ -40,7 +40,8 @@ RUN apt-add-repository -s 'deb http://mirror.rackspace.com/ubuntu/ xenial main r
         libssl-dev \
         libtool \
         libxml2-dev \
-        libxslt1-dev \libgd2-xpm-dev
+        libxslt1-dev \
+        libgd2-xpm-dev \
         make \
         unzip \
         wget \
