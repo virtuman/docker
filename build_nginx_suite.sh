@@ -10,7 +10,7 @@ PROJECT_DIR=`pwd`
 
 PROJECTS=("virtuman-nginx-pagespeed"  "virtuman-php-exim" "virtuman-php-exim-memcached" "wordpress" "runner-php" "runner-wordpress")
 
-NGINX_VERSION="1.11.9"
+NGINX_VERSION="1.13.0"
 
 NGINX_PAGESPEED_VERSION="latest-stable"
 
