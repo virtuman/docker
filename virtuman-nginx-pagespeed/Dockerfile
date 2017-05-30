@@ -9,11 +9,11 @@ MAINTAINER Alexei Smirnov <alexei@virtuman.com>
 # https://www.openssl.org/source
 # https://github.com/kvspb/nginx-auth-ldap
 
-ENV NGINX_VERSION=${NGINX_VERSION:-1.11.9} \
+ENV NGINX_VERSION=${NGINX_VERSION:-1.13.0} \
     PAGESPEED_VERSION=${PAGESPEED_VERSION:-latest-stable} \
     PAGESPEED_PSOL_VERSION=${PAGESPEED_VERSION:-1.11.33.4} \
-    HEADERS_MORE_VERSION=${HEADERS_MORE_VERSION:-0.31} \
-    OPENSSL_VERSION=${OPENSSL_VERSION:-1.0.2j} \
+    HEADERS_MORE_VERSION=${HEADERS_MORE_VERSION:-0.32} \
+    OPENSSL_VERSION=${OPENSSL_VERSION:-1.1.0e} \
     TERM=xterm-256color \
     DEBIAN_FRONTEND=noninteractive
 #   TZ=UTC \
