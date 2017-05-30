@@ -34,7 +34,7 @@ RUN apt-add-repository -s 'deb http://mirror.rackspace.com/ubuntu/ xenial main r
         libc6-dev \
         libgd2-xpm-dev \
         libgoogle-perftools-dev \
-        libldap-dev \
+#        libldap-dev \
         libpcre3-dev \
         libperl-dev \
         libssl-dev \
@@ -54,7 +54,7 @@ RUN apt-add-repository -s 'deb http://mirror.rackspace.com/ubuntu/ xenial main r
 	echo "Downloading ngx_pagespeed ${PAGESPEED_VERSION} from https://github.com/pagespeed/ngx_pagespeed/archive/${PAGESPEED_VERSION}.tar.gz..." && wget -qO - https://github.com/pagespeed/ngx_pagespeed/archive/${PAGESPEED_VERSION}.tar.gz | tar zxf - -C /tmp && \
 	echo "Downloading pagespeed psol ${PAGESPEED_PSOL_VERSION} from https://dl.google.com/dl/page-speed/psol/${PAGESPEED_PSOL_VERSION}.tar.gz..." && wget -qO - https://dl.google.com/dl/page-speed/psol/${PAGESPEED_PSOL_VERSION}.tar.gz | tar xzf  - -C /tmp/ngx_pagespeed-${PAGESPEED_VERSION} && \
 	echo "Downloading openssl v${OPENSSL_VERSION} from https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz ..." && wget -qO - https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz | tar xzf  - -C /tmp && \
-    echo "Downloading nginx-auth-ldap from https://github.com/kvspb/nginx-auth-ldap/archive/master.tar.gz ..." && wget -qO - https://github.com/kvspb/nginx-auth-ldap/archive/master.tar.gz | tar xzf  - -C /tmp && \
+#    echo "Downloading nginx-auth-ldap from https://github.com/kvspb/nginx-auth-ldap/archive/master.tar.gz ..." && wget -qO - https://github.com/kvspb/nginx-auth-ldap/archive/master.tar.gz | tar xzf  - -C /tmp && \
     cd /tmp/nginx-${NGINX_VERSION} && \
     	./configure \
 		--prefix=/etc/nginx  \
@@ -105,7 +105,7 @@ RUN apt-add-repository -s 'deb http://mirror.rackspace.com/ubuntu/ xenial main r
 		--with-ipv6 \
 		--with-openssl=/tmp/openssl-${OPENSSL_VERSION} \
         --add-module=/tmp/headers-more-nginx-module-${HEADERS_MORE_VERSION} \
-        --add-module=/tmp/nginx-auth-ldap-master \
+#        --add-module=/tmp/nginx-auth-ldap-master \
 		--add-module=/tmp/ngx_pagespeed-${PAGESPEED_VERSION}  && \
 	make && \
 	make install && \
