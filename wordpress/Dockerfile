@@ -14,3 +14,4 @@ RUN curl -o /usr/local/bin/wp-cli.phar https://raw.githubusercontent.com/wp-cli/
     echo 'alias wp="/sbin/setuser ${APP_USER:-$DEFAULT_APP_USER} /usr/local/bin/wp-cli.phar"' >> /root/.bashrc && \
     rm -rf /etc/nginx/sites-enabled/default-ssl.conf
 
+WORKDIR /var/www
